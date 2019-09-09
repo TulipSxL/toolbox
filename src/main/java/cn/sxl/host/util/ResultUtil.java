@@ -25,7 +25,7 @@ public class ResultUtil {
     }
 
     public static String prettyResult(ProgramVO programVO) {
-        StringBuilder prettyResult = new StringBuilder("# ").append(programVO.getProgram().getName()).append("\n");
+        StringBuilder prettyResult = new StringBuilder("# ").append(programVO.getProgram().getName());
 
         for (Host host : programVO.getHostList()) {
             appendLine(prettyResult, host);
@@ -36,6 +36,6 @@ public class ResultUtil {
     }
 
     private static void appendLine(StringBuilder sb, Host host) {
-        sb.append(host.getIp()).append(" ").append(host.getName()).append("\n");
+        sb.append("\n").append(host.getIp()).append(" ").append(host.getName());
     }
 }
