@@ -29,12 +29,29 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
+    public Program getProgramById(int id) {
+        Optional<Program> programOptional = programRepository.findById(id);
+
+        return programOptional.orElse(null);
+    }
+
+    @Override
     public List<Program> getAllProgram() {
         return programRepository.findAll();
     }
 
     @Override
     public Program addProgram(Program program) {
+        return programRepository.saveAndFlush(program);
+    }
+
+    @Override
+    public void removeProgramById(int id) {
+        programRepository.deleteById(id);
+    }
+
+    @Override
+    public Program modifyProgram(Program program) {
         return programRepository.saveAndFlush(program);
     }
 }

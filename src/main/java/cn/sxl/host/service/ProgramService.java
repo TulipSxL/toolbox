@@ -1,6 +1,7 @@
 package cn.sxl.host.service;
 
 import cn.sxl.host.entity.Program;
+import cn.sxl.host.entity.Program;
 
 import java.util.List;
 
@@ -19,6 +20,13 @@ public interface ProgramService {
     Program getProgramByName(String name);
 
     /**
+     * 通过 ID 获取 Program 实体
+     * @param id ID
+     * @return 实体
+     */
+    Program getProgramById(int id);
+
+    /**
      * 获取全部 Program
      * @return Program 列表
      */
@@ -30,4 +38,19 @@ public interface ProgramService {
      * @return 添加的实体
      */
     Program addProgram(Program program);
+
+    /**
+     * 删除 Program
+     * @param id Program ID
+     * @since 1.3.0
+     */
+    void removeProgramById(int id);
+
+    /**
+     * 修改 Program
+     * @param program Program 实体
+     * @since 1.3.0
+     * @return Program
+     */
+    Program modifyProgram(Program program);
 }

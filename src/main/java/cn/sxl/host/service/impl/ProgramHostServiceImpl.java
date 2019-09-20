@@ -20,7 +20,12 @@ public class ProgramHostServiceImpl implements ProgramHostService {
     }
 
     @Override
-    public ProgramHost addHostToProgram(ProgramHost programHost) {
-        return programHostRepository.saveAndFlush(programHost);
+    public void addHostToProgram(ProgramHost programHost) {
+        programHostRepository.saveAndFlush(programHost);
+    }
+
+    @Override
+    public void clearHostList(int programId) {
+        programHostRepository.deleteHostByProgramName(programId);
     }
 }

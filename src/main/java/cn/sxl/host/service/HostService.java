@@ -37,4 +37,19 @@ public interface HostService {
      * @return Host 列表
      */
     List<Host> getHostListByProgramId(int programId);
+
+    /**
+     * 删除 Host
+     * @param id Host ID
+     * @since 1.3.0
+     */
+    void removeHostById(int id);
+
+    /**
+     * 修改 Host
+     * @param host Host 实体
+     * @since 1.3.0
+     * @return Host
+     */
+    Host modifyHost(Host host);
 }

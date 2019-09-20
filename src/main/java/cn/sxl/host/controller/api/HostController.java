@@ -1,4 +1,4 @@
-package cn.sxl.host.controller;
+package cn.sxl.host.controller.api;
 
 import cn.sxl.host.entity.Host;
 import cn.sxl.host.service.HostService;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "/host")
+@RequestMapping("/api/host")
 public class HostController {
 
     private final HostService hostService;
@@ -26,21 +26,21 @@ public class HostController {
         this.hostService = hostService;
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Host> getHost(@PathVariable("id") int id) {
         Host host = hostService.getHostById(id);
 
         return ResponseEntity.ok(host);
     }
 
-    @GetMapping(value = "")
+    @GetMapping("")
     public ResponseEntity<List<Host>> getAllHost(){
         List<Host> hostList = hostService.getAllHost();
 
         return ResponseEntity.ok(hostList);
     }
 
-    @GetMapping(value = "/pretty")
+    @GetMapping("/pretty")
     public ResponseEntity<String> getAllHostAfterPretty() {
         List<Host> hostList = hostService.getAllHost();
         String prettyResult = ResultUtil.prettyResult(hostList);
@@ -48,9 +48,22 @@ public class HostController {
         return ResponseEntity.ok(prettyResult);
     }
 
-    @PostMapping(value = {"/",""})
+    @PostMapping({"/",""})
     public ResponseEntity<Host> addHost(@RequestBody Host host){
         Host added = hostService.addHost(host);
         return ResponseEntity.ok(added);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Host> removeHost(@PathVariable int id) {
+        hostService.removeHostById(id);
+        return ResponseEntity.ok(hostService.getHostById(id));
+    }
+
+    @PutMapping("")
+    public ResponseEntity<Host> modifyHost(@RequestBody Host host) {
+        Host modified = hostService.modifyHost(host);
+
+        return ResponseEntity.ok(modified);
     }
 }

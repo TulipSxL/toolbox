@@ -1,4 +1,4 @@
-package cn.sxl.host.controller;
+package cn.sxl.host.controller.api;
 
 import cn.sxl.host.entity.Host;
 import cn.sxl.host.entity.Program;
@@ -8,9 +8,11 @@ import cn.sxl.host.service.ProgramHostService;
 import cn.sxl.host.service.ProgramService;
 import cn.sxl.host.util.ResultUtil;
 import cn.sxl.host.vo.ProgramVO;
+import com.google.common.collect.Lists;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "/program")
+@RequestMapping("/api/program")
 public class ProgramController {
 
     private final ProgramService programService;
@@ -33,21 +35,34 @@ public class ProgramController {
         this.programHostService = programHostService;
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping("/{name}")
     public ResponseEntity<ProgramVO> getProgram(@PathVariable("name") String name) {
         ProgramVO programVO = setProgramVO(name);
 
         return ResponseEntity.ok(programVO);
     }
 
-    @GetMapping(value = "")
+    @GetMapping("")
     public ResponseEntity<List<Program>> getAllProgram(){
         List<Program> programList = programService.getAllProgram();
 
         return ResponseEntity.ok(programList);
     }
 
-    @GetMapping(value = "/pretty/{name}")
+    @GetMapping("/host")
+    public ResponseEntity<List<ProgramVO>> getProgramWithHostList() {
+        List<ProgramVO> programVoList = Lists.newArrayList();
+        List<Program> programList = programService.getAllProgram();
+
+        for (Program program : programList) {
+            ProgramVO programVO = setProgramVO(program.getName());
+            programVoList.add(programVO);
+        }
+
+        return ResponseEntity.ok(programVoList);
+    }
+
+    @GetMapping("/pretty/{name}")
     public ResponseEntity<String> getProgramAfterPretty(@PathVariable("name") String name) {
         ProgramVO programVO = setProgramVO(name);
 
@@ -62,17 +77,56 @@ public class ProgramController {
         return ResponseEntity.ok(added);
     }
 
-    @PostMapping(value = "/{name}/host")
+    @PostMapping("/{name}/host")
     public ResponseEntity<ProgramVO> addHostList(@PathVariable("name") String programName, @RequestBody List<Host> hostList){
         ProgramHost programHost;
+        List<Host> newHostList = Lists.newArrayList();
         Program program = programService.getProgramByName(programName);
+        List<Host> existHostList = hostService.getHostListByProgramId(program.getId());
+
+
+        for (Host host : hostList) {
+            if (!existHostList.contains(host)) {
+                newHostList.add(host);
+            }
+        }
+
+        for (Host host : newHostList) {
+            programHost = setProgramHost(program.getId(), host.getId());
+            programHostService.addHostToProgram(programHost);
+        }
+
+        ProgramVO programVO = setProgramVO(programName);
+
+        return ResponseEntity.ok((programVO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Program> removeProgram(@PathVariable int id) {
+        programService.removeProgramById(id);
+
+        return ResponseEntity.ok(programService.getProgramById(id));
+    }
+
+    @PutMapping("")
+    public ResponseEntity<Program> modifyProgram(@RequestBody Program program) {
+        Program modified = programService.modifyProgram(program);
+
+        return ResponseEntity.ok(modified);
+    }
+
+    @PutMapping("/{id}/host")
+    public ResponseEntity<ProgramVO> modifyHostList(@PathVariable("id") int programId, @RequestBody List<Host> hostList) {
+        ProgramHost programHost;
+        Program program = programService.getProgramById(programId);
+        programHostService.clearHostList(programId);
 
         for (Host host : hostList) {
             programHost = setProgramHost(program.getId(), host.getId());
             programHostService.addHostToProgram(programHost);
         }
 
-        ProgramVO programVO = setProgramVO(programName);
+        ProgramVO programVO = setProgramVO(program.getName());
 
         return ResponseEntity.ok((programVO));
     }

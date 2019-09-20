@@ -3,6 +3,7 @@ package cn.sxl.host.service.impl;
 import cn.sxl.host.entity.Host;
 import cn.sxl.host.repository.HostRepository;
 import cn.sxl.host.service.HostService;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,8 @@ public class HostServiceImpl implements HostService {
 
     @Override
     public Host getHostById(int id) {
-        Optional<Host> host = hostRepository.findById(id);
-        return host.orElse(null);
+        Optional<Host> hostOptional = hostRepository.findById(id);
+        return hostOptional.orElse(null);
     }
 
     @Override
@@ -43,5 +44,15 @@ public class HostServiceImpl implements HostService {
     @Override
     public List<Host> getHostListByProgramId(int programId) {
         return hostRepository.findHostByProgramId(programId);
+    }
+
+    @Override
+    public void removeHostById(int id) {
+        hostRepository.deleteById(id);
+    }
+
+    @Override
+    public Host modifyHost(Host host) {
+        return hostRepository.saveAndFlush(host);
     }
 }

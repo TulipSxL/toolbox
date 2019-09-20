@@ -12,7 +12,13 @@ public interface ProgramHostService {
     /**
      * 将 Host 添加到方案中
      * @param programHost 对应实体
-     * @return 添加结果
      */
-    ProgramHost addHostToProgram(ProgramHost programHost);
+    void addHostToProgram(ProgramHost programHost);
+
+    /**
+     * 删除 Program 下的所有 Host
+     * @param programId Program ID
+     * @since 1.3.0
+     */
+    void clearHostList(int programId);
 }
