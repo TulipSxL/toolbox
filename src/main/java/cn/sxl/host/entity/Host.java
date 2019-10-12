@@ -20,4 +20,5 @@ public class Host {
 
     private String ip;
     private String name;
+    private Boolean status;
 }

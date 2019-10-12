@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.sxl</groupId>
-    <artifactId>host</artifactId>
-    <version>1.3.0</version>
-    <name>hosts</name>
-    <description>Share hosts for all computers</description>
+    <artifactId>toolbox</artifactId>
+    <version>1.4.0</version>
+    <name>toolbox</name>
+    <description>Tool Box</description>
     <packaging>war</packaging>
 
     <properties>

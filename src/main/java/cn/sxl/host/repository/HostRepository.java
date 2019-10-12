@@ -20,7 +20,7 @@ public interface HostRepository extends JpaRepository<Host, Integer> {
      * @return Host 列表
      */
     @Query(
-            value = "select h.id, h.ip, h.name from host h ,program_host ph where ph.program_id = ?1 and ph.host_id = h.id"
+            value = "select h.id, h.ip, h.name, h.status from host h ,program_host ph where ph.program_id = ?1 and ph.host_id = h.id and h.status = 1"
             , nativeQuery = true)
     List<Host> findHostByProgramId(int programId);
 }
