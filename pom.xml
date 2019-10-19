@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.sxl</groupId>
     <artifactId>toolbox</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <name>toolbox</name>
     <description>Tool Box</description>
     <packaging>war</packaging>
