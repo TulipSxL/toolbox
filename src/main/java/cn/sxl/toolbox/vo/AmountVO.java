@@ -14,6 +14,6 @@ import java.util.List;
 @Data
 public class AmountVO {
 
-    private String year;
     List<Amount> amountList;
+    private String year;
 }

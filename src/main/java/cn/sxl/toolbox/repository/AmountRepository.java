@@ -26,4 +26,12 @@ public interface AmountRepository extends JpaRepository<Amount, Integer> {
      * @return 列表
      */
     List<Amount> findAllByYear(String year);
+
+    /**
+     * 根据年份和月份查询
+     * @param year 年份
+     * @param month 月份
+     * @return 唯一数据
+     */
+    Amount findByYearAndMonth(String year, String month);
 }

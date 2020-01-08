@@ -11,6 +11,10 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface ProgramHostRepository extends JpaRepository<ProgramHost, Integer> {
 
+    /**
+     * 通过ID删除
+     * @param programId ID
+     */
     @Query(value = "delete from program_host where program_id = ?1", nativeQuery = true)
-    void deleteHostByProgramName(int programId);
+    void deleteHostByProgramId(int programId);
 }

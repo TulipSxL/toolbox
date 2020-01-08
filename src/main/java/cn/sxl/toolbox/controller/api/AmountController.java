@@ -1,6 +1,7 @@
 package cn.sxl.toolbox.controller.api;
 
 import cn.sxl.toolbox.entity.Amount;
+import cn.sxl.toolbox.enums.MonthEnum;
 import cn.sxl.toolbox.service.AmountService;
 import cn.sxl.toolbox.vo.AmountVO;
 import org.springframework.http.ResponseEntity;
@@ -21,21 +22,6 @@ import java.util.List;
 public class AmountController {
 
     private final AmountService amountService;
-    private static final String[] MONTH =
-            {
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December"
-            };
 
     public AmountController(AmountService amountService) {
         this.amountService = amountService;
@@ -46,6 +32,13 @@ public class AmountController {
         List<AmountVO> amountList = amountService.getAllAmount();
 
         return ResponseEntity.ok(amountList);
+    }
+
+    @GetMapping("/reset")
+    public ResponseEntity<Amount> resetConsumptionAndAverage() {
+        Amount amount = amountService.recalculateAverage();
+
+        return ResponseEntity.ok(amount);
     }
 
     @PutMapping("")
@@ -65,13 +58,21 @@ public class AmountController {
     @Scheduled(cron = "0 0 0 1 * ?")
     public void addAmount() {
         Calendar now = Calendar.getInstance();
+        String year = String.valueOf(now.get(Calendar.YEAR));
+        String month = String.valueOf(MonthEnum.values()[now.get(Calendar.MONTH)]);
 
         Amount amount = new Amount();
-        amount.setYear(String.valueOf(now.get(Calendar.YEAR)));
-        amount.setMonth(MONTH[now.get(Calendar.MONTH)]);
+        amount.setYear(year);
+        amount.setMonth(month);
         amount.setTotal(1500D);
         amount.setCost(0D);
+        amount.setConsumption(0D);
 
         amountService.addAmount(amount);
+    }
+
+    @Scheduled(cron = "0 0 0 1/1 * ? ")
+    public void clearConsumption() {
+        amountService.clearConsumptionAndUpdateAverage();
     }
 }

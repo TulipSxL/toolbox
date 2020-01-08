@@ -33,7 +33,7 @@ public class HostController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Host>> getAllHost(){
+    public ResponseEntity<List<Host>> getAllHost() {
         List<Host> hostList = hostService.getAllHost();
 
         return ResponseEntity.ok(hostList);
@@ -47,8 +47,8 @@ public class HostController {
         return ResponseEntity.ok(prettyResult);
     }
 
-    @PostMapping({"/",""})
-    public ResponseEntity<Host> addHost(@RequestBody Host host){
+    @PostMapping({"/", ""})
+    public ResponseEntity<Host> addHost(@RequestBody Host host) {
         Host added = hostService.addHost(host);
         return ResponseEntity.ok(added);
     }

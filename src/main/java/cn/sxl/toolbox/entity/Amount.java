@@ -22,4 +22,6 @@ public class Amount {
     private String month;
     private Double total;
     private Double cost;
+    private Double consumption;
+    private Double average;
 }

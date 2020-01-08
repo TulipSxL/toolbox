@@ -42,7 +42,7 @@ public class ProgramController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Program>> getAllProgram(){
+    public ResponseEntity<List<Program>> getAllProgram() {
         List<Program> programList = programService.getAllProgram();
 
         return ResponseEntity.ok(programList);
@@ -70,14 +70,14 @@ public class ProgramController {
         return ResponseEntity.ok(prettyResult);
     }
 
-    @PostMapping(value = {"/",""})
-    public ResponseEntity<Program> addProgram(@RequestBody Program program){
+    @PostMapping(value = {"/", ""})
+    public ResponseEntity<Program> addProgram(@RequestBody Program program) {
         Program added = programService.addProgram(program);
         return ResponseEntity.ok(added);
     }
 
     @PostMapping("/{name}/host")
-    public ResponseEntity<ProgramVO> addHostList(@PathVariable("name") String programName, @RequestBody List<Host> hostList){
+    public ResponseEntity<ProgramVO> addHostList(@PathVariable("name") String programName, @RequestBody List<Host> hostList) {
         ProgramHost programHost;
         List<Host> newHostList = Lists.newArrayList();
         Program program = programService.getProgramByName(programName);
@@ -130,11 +130,11 @@ public class ProgramController {
         return ResponseEntity.ok((programVO));
     }
 
-    private ProgramVO setProgramVO(String programName){
+    private ProgramVO setProgramVO(String programName) {
         ProgramVO programVO = new ProgramVO();
 
         Program program = programService.getProgramByName(programName);
-        List<Host> hostList =hostService.getHostListByProgramId(program.getId());
+        List<Host> hostList = hostService.getHostListByProgramId(program.getId());
 
         programVO.setProgram(program);
         programVO.setHostList(hostList);

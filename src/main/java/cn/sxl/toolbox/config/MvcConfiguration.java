@@ -6,7 +6,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
@@ -21,7 +24,7 @@ public class MvcConfiguration implements ApplicationContextAware, WebMvcConfigur
     private ApplicationContext applicationContext;
 
     @Override
-    public void setApplicationContext( ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
@@ -32,10 +35,11 @@ public class MvcConfiguration implements ApplicationContextAware, WebMvcConfigur
 
     /**
      * 页面解析
+     *
      * @return ViewResolver
      */
     @Bean(name = "viewResolver")
-    public ViewResolver createViewResolver(){
+    public ViewResolver createViewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
         viewResolver.setApplicationContext(this.applicationContext);
@@ -46,5 +50,15 @@ public class MvcConfiguration implements ApplicationContextAware, WebMvcConfigur
         viewResolver.setSuffix(".html");
 
         return viewResolver;
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("*")
+                .allowedHeaders("*")
+                .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
+                .maxAge(3600)
+                .allowCredentials(true);
     }
 }

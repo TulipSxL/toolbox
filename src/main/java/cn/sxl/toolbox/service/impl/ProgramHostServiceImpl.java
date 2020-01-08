@@ -26,6 +26,6 @@ public class ProgramHostServiceImpl implements ProgramHostService {
 
     @Override
     public void clearHostList(int programId) {
-        programHostRepository.deleteHostByProgramName(programId);
+        programHostRepository.deleteHostByProgramId(programId);
     }
 }
