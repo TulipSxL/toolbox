@@ -2,6 +2,7 @@ package cn.sxl.toolbox.util;
 
 import cn.sxl.toolbox.enums.MonthEnum;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -33,6 +34,11 @@ public class DateUtil {
 
     public static int getDate() {
         return Calendar.getInstance().get(Calendar.DATE);
+    }
+
+    public static String getToday() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(Calendar.getInstance().getTime());
     }
 
     public static int getDay(int year, int month) {
