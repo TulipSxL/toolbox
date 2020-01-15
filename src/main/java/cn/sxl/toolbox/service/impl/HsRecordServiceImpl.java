@@ -52,4 +52,16 @@ public class HsRecordServiceImpl implements HsRecordService {
     public List<HsRecord> getHsRecordByDate(Date date) {
         return hsRecordRepository.findHearthStoneRecordByDate(date);
     }
+
+    @Override
+    public Integer computeChangedScore(Date date) {
+        List<HsRecord> hsRecordList = getHsRecordByDate(date);
+        int hsRecordSize = hsRecordList.size() - 1;
+
+        if (hsRecordList.size() == 1) {
+            return hsRecordList.get(0).getIncrement();
+        }
+
+        return hsRecordList.get(0).getScore() - hsRecordList.get(hsRecordSize).getScore();
+    }
 }

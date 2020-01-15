@@ -50,4 +50,11 @@ public interface HsRecordService {
      * @return 查询结果
      */
     List<HsRecord> getHsRecordByDate(Date date);
+
+    /**
+     * 计算每天变动的分数
+     * @param date 日期
+     * @return 分数
+     */
+    Integer computeChangedScore(Date date);
 }

@@ -42,6 +42,7 @@ public class HsRecordController {
             HsRecordVO hsRecordVO = new HsRecordVO();
             hsRecordVO.setDate(dateFormat.format(date));
             hsRecordVO.setRecords(hsRecordList);
+            hsRecordVO.setChangedScore(hsRecordService.computeChangedScore(date));
 
             hsRecordVoList.add(hsRecordVO);
         }
@@ -51,7 +52,6 @@ public class HsRecordController {
 
     @PostMapping("")
     public ResponseEntity<HsRecord> addHsRecord(@RequestBody HsRecord hearthStoneRecord) {
-        log.info("========REQUEST BODY:" + hearthStoneRecord);
 
         if (hearthStoneRecord.getDate() == null) {
             hearthStoneRecord.setDate(new Date());
