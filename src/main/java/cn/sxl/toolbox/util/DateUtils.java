@@ -11,7 +11,7 @@ import java.util.Calendar;
  * 2019-11-15 11:14
  */
 
-public class DateUtil {
+public class DateUtils {
     public static int getYear(Calendar calendar) {
         return calendar.get(Calendar.YEAR);
     }

@@ -3,7 +3,7 @@ package cn.sxl.toolbox.service.impl;
 import cn.sxl.toolbox.entity.Amount;
 import cn.sxl.toolbox.repository.AmountRepository;
 import cn.sxl.toolbox.service.AmountService;
-import cn.sxl.toolbox.util.DateUtil;
+import cn.sxl.toolbox.util.DateUtils;
 import cn.sxl.toolbox.vo.AmountVO;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +58,7 @@ public class AmountServiceImpl implements AmountService {
 
     @Override
     public void clearConsumptionAndUpdateAverage() {
-        int remainDay = DateUtil.getRemainDays();
+        int remainDay = DateUtils.getRemainDays();
         Amount amount = getByYearAndMonth();
 
         double average = (amount.getTotal() - amount.getCost()) / remainDay;
@@ -73,7 +73,7 @@ public class AmountServiceImpl implements AmountService {
 
     @Override
     public Amount recalculateAverage() {
-        int remainDay = DateUtil.getRemainDays();
+        int remainDay = DateUtils.getRemainDays();
         Amount amount = getByYearAndMonth();
 
         double average = (amount.getTotal() - amount.getCost() + amount.getConsumption()) / remainDay;
@@ -92,8 +92,8 @@ public class AmountServiceImpl implements AmountService {
 
     @Override
     public Amount getByYearAndMonth() {
-        String year = DateUtil.convertYearToString();
-        String month = DateUtil.convertMonthToString();
+        String year = DateUtils.convertYearToString();
+        String month = DateUtils.convertMonthToString();
 
         return amountRepository.findByYearAndMonth(year, month);
     }

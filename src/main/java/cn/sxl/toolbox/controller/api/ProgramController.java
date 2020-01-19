@@ -6,7 +6,7 @@ import cn.sxl.toolbox.entity.ProgramHost;
 import cn.sxl.toolbox.service.HostService;
 import cn.sxl.toolbox.service.ProgramHostService;
 import cn.sxl.toolbox.service.ProgramService;
-import cn.sxl.toolbox.util.ResultUtil;
+import cn.sxl.toolbox.util.ResultUtils;
 import cn.sxl.toolbox.vo.ProgramVO;
 import com.google.common.collect.Lists;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +65,7 @@ public class ProgramController {
     public ResponseEntity<String> getProgramAfterPretty(@PathVariable("name") String name) {
         ProgramVO programVO = setProgramVO(name);
 
-        String prettyResult = ResultUtil.prettyResult(programVO);
+        String prettyResult = ResultUtils.prettyResult(programVO);
 
         return ResponseEntity.ok(prettyResult);
     }

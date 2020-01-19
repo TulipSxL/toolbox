@@ -17,4 +17,5 @@ public class HsRecordVO {
     List<HsRecord> records;
     private String date;
     private Integer changedScore;
+    private Integer highestScore;
 }

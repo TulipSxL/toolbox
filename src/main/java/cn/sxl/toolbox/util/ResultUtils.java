@@ -14,7 +14,7 @@ import java.util.List;
  * 2019-09-03 05:16
  */
 
-public class ResultUtil {
+public class ResultUtils {
 
     public static String prettyResult(List<Host> hostList) {
         StringBuilder prettyResult = new StringBuilder();

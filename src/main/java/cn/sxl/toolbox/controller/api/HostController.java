@@ -2,7 +2,7 @@ package cn.sxl.toolbox.controller.api;
 
 import cn.sxl.toolbox.entity.Host;
 import cn.sxl.toolbox.service.HostService;
-import cn.sxl.toolbox.util.ResultUtil;
+import cn.sxl.toolbox.util.ResultUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +42,7 @@ public class HostController {
     @GetMapping("/pretty")
     public ResponseEntity<String> getAllHostAfterPretty() {
         List<Host> hostList = hostService.getAllHost();
-        String prettyResult = ResultUtil.prettyResult(hostList);
+        String prettyResult = ResultUtils.prettyResult(hostList);
 
         return ResponseEntity.ok(prettyResult);
     }
