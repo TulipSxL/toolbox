@@ -4,9 +4,7 @@ import cn.sxl.toolbox.entity.HsHero;
 import cn.sxl.toolbox.service.HsHeroService;
 import com.google.common.collect.Lists;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,14 +25,30 @@ public class HsHeroController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<String>> getAllOnlineHero() {
-        List<String> onlineHeroList = Lists.newArrayList();
-        List<HsHero> allOnlineHsHero = hsHeroService.getAllOnlineHsHero();
+    public ResponseEntity<List<HsHero>> getAllOnlineHero(@RequestParam(value = "online", required = false, defaultValue = "false") Boolean isOnline) {
+        if (isOnline) {
+            List<HsHero> onlineHsHero = hsHeroService.getAllOnlineHsHero();
 
-        for (HsHero onlineHsHero : allOnlineHsHero) {
-            onlineHeroList.add(onlineHsHero.getName());
+            return ResponseEntity.ok(onlineHsHero);
+        } else {
+            List<HsHero> heroList = hsHeroService.getAllHsHero();
+
+            return ResponseEntity.ok(heroList);
         }
+    }
 
-        return ResponseEntity.ok(onlineHeroList);
+    @PostMapping("")
+    public ResponseEntity<HsHero> addNewHsHero(@RequestBody HsHero hsHero) {
+        HsHero newHero = hsHeroService.addNewHero(hsHero);
+
+        return ResponseEntity.ok(newHero);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<HsHero> changeHeroState(@PathVariable Integer id) {
+        //应该检查数据是否存在，自用，忽略
+        HsHero changedStateHero = hsHeroService.changeHeroState(id);
+
+        return ResponseEntity.ok(changedStateHero);
     }
 }

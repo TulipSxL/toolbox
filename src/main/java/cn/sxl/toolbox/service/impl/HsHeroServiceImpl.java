@@ -6,6 +6,7 @@ import cn.sxl.toolbox.service.HsHeroService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author SxL
@@ -23,7 +24,28 @@ public class HsHeroServiceImpl implements HsHeroService {
     }
 
     @Override
+    public List<HsHero> getAllHsHero() {
+        return hsHeroRepository.findAll();
+    }
+
+    @Override
     public List<HsHero> getAllOnlineHsHero() {
         return hsHeroRepository.getAllByState(true);
+    }
+
+    @Override
+    public HsHero addNewHero(HsHero hsHero) {
+        return hsHeroRepository.save(hsHero);
+    }
+
+    @Override
+    public HsHero changeHeroState(Integer id) {
+        Optional<HsHero> hsHeroOptional = hsHeroRepository.findById(id);
+        HsHero hsHero = hsHeroOptional.orElse(null);
+
+        assert hsHero != null;
+
+        hsHero.setState(!hsHero.getState());
+        return hsHeroRepository.saveAndFlush(hsHero);
     }
 }

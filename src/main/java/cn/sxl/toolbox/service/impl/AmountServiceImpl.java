@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class AmountServiceImpl implements AmountService {
 
         double average = (amount.getTotal() - amount.getCost()) / remainDay;
         amount.setConsumption(0D);
-        amount.setAverage(new BigDecimal(average).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        amount.setAverage(new BigDecimal(average).setScale(2, RoundingMode.HALF_UP).doubleValue());
 
         amountRepository.saveAndFlush(amount);
 
@@ -77,7 +78,7 @@ public class AmountServiceImpl implements AmountService {
         Amount amount = getByYearAndMonth();
 
         double average = (amount.getTotal() - amount.getCost() + amount.getConsumption()) / remainDay;
-        amount.setAverage(new BigDecimal(average).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        amount.setAverage(new BigDecimal(average).setScale(2, RoundingMode.HALF_UP).doubleValue());
 
         log.info("remain day is {}, average amount is {}, amount is {}",
                 remainDay, average, amount);
