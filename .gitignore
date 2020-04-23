@@ -26,4 +26,5 @@ hs_err_pid*
 .idea/
 
 target/
-src/main/webapp/
+/src/main/webapp/
+/src/test/java/cn/sxl/toolbox/

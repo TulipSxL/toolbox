@@ -1,4 +1,4 @@
-package cn.sxl.toolbox.controller.api;
+package cn.sxl.toolbox.controller.api.hs;
 
 import cn.sxl.toolbox.entity.HsRecord;
 import cn.sxl.toolbox.service.HsRecordService;
@@ -26,7 +26,7 @@ import java.util.List;
 public class HsRecordController {
 
     private final HsRecordService hsRecordService;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public HsRecordController(HsRecordService hsRecordService) {
         this.hsRecordService = hsRecordService;

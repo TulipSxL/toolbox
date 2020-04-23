@@ -1,4 +1,4 @@
-package cn.sxl.toolbox.controller.api;
+package cn.sxl.toolbox.controller.api.hs;
 
 import cn.sxl.toolbox.entity.HsHero;
 import cn.sxl.toolbox.service.HsHeroService;
